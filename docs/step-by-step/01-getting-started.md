@@ -291,31 +291,6 @@ npx prisma studio
 
   ![prisma_studio_test](/docs/images/prisma_studio_test.png)
 
-## Use Prisma Client in your NestJS services
-
-You're now able to send database queries with Prisma Client.
-
-When setting up your NestJS application, you'll want to abstract away the Prisma Client API for database queries within a service. To get started, you can create a new `PrismaService` that takes care of instantiating `PrismaClient` and connecting to your database.
-
-Inside the src directory, create a new file called prisma.service.ts and add the following code to it:
-
-```typescript
-import { Injectable } from '@nestjs/common';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from './generated/prisma/client';
-import { Pool } from 'pg';
-
-@Injectable()
-export class PrismaService extends PrismaClient {
-  constructor() {
-    const adapter = new PrismaPg(
-      new Pool({ connectionString: process.env.DATABASE_URL }),
-    );
-    super({ adapter });
-  }
-}
-```
-
 ---
 
 # Read more in
