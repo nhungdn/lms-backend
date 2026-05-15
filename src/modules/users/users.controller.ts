@@ -13,8 +13,8 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Post()
-  create(@Body() data: { name: string; email: string }) {
-    return this.usersService.create(data);
-  }
+  // @Post()
+  // create(@Body() data: { name: string; email: string }) {
+  //   return this.usersService.create(data);
+  // }
 }

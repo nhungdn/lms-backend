@@ -9,7 +9,7 @@ export class UsersService {
     return this.prisma.user.findMany();
   }
 
-  async create(data: { name: string; email: string }) {
-    return this.prisma.user.create({ data });
-  }
+  // async create(data: { name: string; email: string }) {
+  //   return this.prisma.user.create({ data });
+  // }
 }
