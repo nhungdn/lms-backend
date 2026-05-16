@@ -16,7 +16,10 @@ import { envValidationSchema } from './config/env.validation';
     LessonsModule,
     EnrollmentsModule,
     PrismaModule,
-    ConfigModule.forRoot({ validationSchema: envValidationSchema }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: envValidationSchema,
+    }),
   ],
   controllers: [],
   providers: [],

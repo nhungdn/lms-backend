@@ -7,4 +7,9 @@ export const envValidationSchema = Joi.object({
   DB_PORT: Joi.number().default(5432),
   DATABASE_URL: Joi.string().required(),
   PORT: Joi.number().default(3000),
+
+  JWT_ACCESS_SECRET: Joi.string().required(),
+  ACCESS_TOKEN_EXPIRES: Joi.string().default('15m'),
+  JWT_REFRESH_SECRET: Joi.string().required(),
+  REFRESH_TOKEN_EXPIRES: Joi.string().default('7d'),
 });
