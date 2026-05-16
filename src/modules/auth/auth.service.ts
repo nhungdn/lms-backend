@@ -138,7 +138,52 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
-    
+
     return this.generateTokens(user.id, user.role);
+  }
+
+  async logout(userId: string, refreshToken: string) {
+    // find all active refresh tokens for the user
+    const userTokens = await this.prisma.refreshToken.findMany({
+      where: {
+        userId: userId,
+        revoked: false,
+      },
+    });
+
+    // find the token record that matches the provided refresh token
+    let tokenToDelete: any = null;
+    for (const tokenRecord of userTokens) {
+      const isMatched = await bcrypt.compare(
+        refreshToken,
+        tokenRecord.tokenHash,
+      );
+      if (isMatched) {
+        tokenToDelete = tokenRecord;
+        break;
+      }
+    }
+
+    // revoke the matched refresh token to log the user out
+    if (tokenToDelete) {
+      await this.prisma.refreshToken.update({
+        where: { id: tokenToDelete.id },
+        data: { revoked: true },
+      });
+    }
+
+    return { message: 'Logged out successfully' };
+  }
+
+  async revokeAllTokensForUser(userId: string) {
+    await this.prisma.refreshToken.updateMany({
+      where: {
+        userId: userId,
+        revoked: false,
+      },
+      data: {
+        revoked: true,
+      },
+    });
   }
 }

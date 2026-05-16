@@ -44,7 +44,6 @@ src/
       dto/
       guards/
       strategies/
-      interfaces/
 ```
 
 ## Register
@@ -72,13 +71,12 @@ POST http://localhost:3000/v1/auth/register
 ### Dependencies
 
 ```
-npm install @nestjs/jwt @nestjs/passport passport passport-local passport-jwt cookie-parser
-npm install -D @types/passport-local @types/cookie-parser
+npm install @nestjs/jwt @nestjs/passport passport passport-local passport-jwt
+npm install -D @types/passport-local
 ```
 
 - `passport` is a nodejs authentication libary, it has a rich ecosystem of strategies that implement various authentication mechanisms.
 - `passport-local` and `passport-jwt` are passport strategies
-- `cookie-parser` is used to read cookies
 
 ### Environment variables
 
@@ -248,3 +246,37 @@ Do the same with `JwtRefreshStratery`.
       return await this.authService.refreshTokens(userId, refreshToken);
     }
   ```
+
+## Log out
+
+### Logout 1 device
+
+- Create logout logic in [`auth.service.ts`](/src/modules/auth/auth.service.ts)
+- Create `/logout` endpoint in [`auth.controller.ts`](/src/modules/auth/auth.controller.ts)
+
+### Logout all devices
+
+It similar with logout 1 device, but the logic is more simple:
+
+```typescript
+// auth.service.ts
+  async revokeAllTokensForUser(userId: string) {
+    await this.prisma.refreshToken.updateMany({
+      where: {
+        userId: userId,
+        revoked: false,
+      },
+      data: {
+        revoked: true,
+      },
+    });
+  }
+
+// auth.controller.ts
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post('revoke-all')
+  async revokeAllTokens(@Request() req) {
+    const userId = req.user.userId;
+    return await this.authService.revokeAllTokensForUser(userId);
+  }
+```

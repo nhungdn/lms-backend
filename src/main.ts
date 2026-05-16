@@ -4,7 +4,6 @@ import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { LoggingInterceptor } from './common/interceptors/logger.interceptor';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
-import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,7 +12,6 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
-  app.use(cookieParser());
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter());

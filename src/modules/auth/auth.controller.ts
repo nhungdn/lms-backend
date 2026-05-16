@@ -37,4 +37,20 @@ export class AuthController {
 
     return await this.authService.refreshTokens(userId, refreshToken);
   }
+
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post('logout')
+  async logout(@Request() req) {
+    const userId = req.user.userId;
+    const refreshToken = req.user.refreshToken;
+
+    return await this.authService.logout(userId, refreshToken);
+  }
+
+  @UseGuards(JwtRefreshAuthGuard)
+  @Post('revoke-all')
+  async revokeAllTokens(@Request() req) {
+    const userId = req.user.userId;
+    return await this.authService.revokeAllTokensForUser(userId);
+  }
 }
