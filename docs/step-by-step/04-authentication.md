@@ -315,3 +315,10 @@ To solve this, we use Custom Decorator `@Public`.
     @Post('login')
     async login(@Request() req, @Body() loginDto: LoginDto) {}
   ```
+
+---
+
+# Read more in
+
+- [Authentication - NestJS Docs](https://docs.nestjs.com/security/authentication)
+- [Passport (authentication) - NestJS Docs](https://docs.nestjs.com/recipes/passport)
