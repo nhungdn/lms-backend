@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
+import { Public } from './decorators/public.decorator';
 
 @Controller({
   path: 'auth',
@@ -13,12 +14,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   // http://localhost:3000/v1/auth/register
+  @Public()
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return await this.authService.register(registerDto);
   }
 
   @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('login')
   async login(@Request() req, @Body() loginDto: LoginDto) {
     const tokens = await this.authService.generateTokens(
@@ -31,6 +34,7 @@ export class AuthController {
 
   // get new access token using refresh token
   @UseGuards(JwtRefreshAuthGuard)
+  @Public()
   @Post('refresh')
   async refresh(@Request() req) {
     const userId = req.user.userId;
@@ -40,6 +44,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtRefreshAuthGuard)
+  @Public()
   @Post('logout')
   async logout(@Request() req) {
     const userId = req.user.userId;
@@ -50,6 +55,7 @@ export class AuthController {
 
   // log out from all devices by revoking all refresh tokens for the user
   @UseGuards(JwtRefreshAuthGuard)
+  @Public()
   @Post('revoke-all')
   async revokeAllTokens(@Request() req) {
     const userId = req.user.userId;

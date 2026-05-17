@@ -39,8 +39,7 @@ Then run prisma migrate command to apply new schema.
 src/
   modules/
     auth/
-      controllers/
-      services/
+      decorators/
       dto/
       guards/
       strategies/
@@ -280,3 +279,39 @@ It similar with logout 1 device, but the logic is more simple:
     return await this.authService.revokeAllTokensForUser(userId);
   }
 ```
+
+## Apply JwtGuard globally
+
+### Register `JwtAuthGuard` in `app.module.ts`:
+
+```typescript
+@Module({
+  imports: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
+})
+export class AppModule {}
+```
+
+- After apply JwtGuard global, all route are proteted.
+
+## Public route
+
+There'll some routes we want to public without authenticate (e.g. `/login`, `/register`,...).
+
+To solve this, we use Custom Decorator `@Public`.
+
+- Create Custom Decorator in [`public.decorator.ts`](/src/modules/auth/decorators/public.decorator.ts) file.
+- Change the `JwtAuthGuard` to check if there is a `@Public` decorator or not.
+- Apply this to any route you want to public:
+
+  ```typescript
+    @UseGuards(LocalAuthGuard)
+    @Public()
+    @Post('login')
+    async login(@Request() req, @Body() loginDto: LoginDto) {}
+  ```

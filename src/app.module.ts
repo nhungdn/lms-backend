@@ -7,6 +7,8 @@ import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { envValidationSchema } from './config/env.validation';
+import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -22,6 +24,11 @@ import { envValidationSchema } from './config/env.validation';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
