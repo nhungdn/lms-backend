@@ -9,7 +9,7 @@ export const envValidationSchema = Joi.object({
   PORT: Joi.number().default(3000),
 
   JWT_ACCESS_SECRET: Joi.string().required(),
-  ACCESS_TOKEN_EXPIRES: Joi.string().default('15m'),
+  ACCESS_TOKEN_EXPIRES: Joi.string().default(900), // 15 minutes in seconds
   JWT_REFRESH_SECRET: Joi.string().required(),
-  REFRESH_TOKEN_EXPIRES: Joi.string().default('7d'),
+  REFRESH_TOKEN_EXPIRES: Joi.string().default(604800), // 7 days in seconds
 });

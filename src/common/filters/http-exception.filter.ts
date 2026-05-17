@@ -23,6 +23,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getResponse()
         : 'Internal server error';
 
+    // Log the exception details for debugging purposes
+    console.error('Exception caught by AllExceptionsFilter:', {
+      status,
+      message,
+      stack: exception.stack,
+    });
+
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),

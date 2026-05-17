@@ -185,5 +185,7 @@ export class AuthService {
         revoked: true,
       },
     });
+
+    return { message: 'All refresh tokens revoked for the user' };
   }
 }

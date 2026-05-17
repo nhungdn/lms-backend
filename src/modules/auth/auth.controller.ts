@@ -29,6 +29,7 @@ export class AuthController {
     return { accessToken: tokens.accessToken };
   }
 
+  // get new access token using refresh token
   @UseGuards(JwtRefreshAuthGuard)
   @Post('refresh')
   async refresh(@Request() req) {
@@ -47,6 +48,7 @@ export class AuthController {
     return await this.authService.logout(userId, refreshToken);
   }
 
+  // log out from all devices by revoking all refresh tokens for the user
   @UseGuards(JwtRefreshAuthGuard)
   @Post('revoke-all')
   async revokeAllTokens(@Request() req) {
