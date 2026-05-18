@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { envValidationSchema } from './config/env.validation';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { CaslModule } from './modules/casl/casl.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { APP_GUARD } from '@nestjs/core';
       isGlobal: true,
       validationSchema: envValidationSchema,
     }),
+    CaslModule,
   ],
   controllers: [],
   providers: [
