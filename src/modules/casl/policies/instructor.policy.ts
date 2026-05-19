@@ -2,7 +2,6 @@ import { AbilityBuilder } from '@casl/ability';
 import { CourseStatus, User } from 'src/generated/prisma/client';
 import { Action } from '../actions.enum';
 import { AppAbility, IPolicyHandler } from '../types';
-import { stat } from 'fs';
 
 export class InstructorPolicy implements IPolicyHandler {
   define({ can, cannot }: AbilityBuilder<AppAbility>, user: User): void {
@@ -42,12 +41,21 @@ export class InstructorPolicy implements IPolicyHandler {
     });
 
     // Lessons
+    can(Action.Create, 'Lesson', {
+      section: { course: { instructorId: user.id } },
+    });
     can(Action.Read, 'Lesson', {
       section: { course: { instructorId: user.id } },
     });
     can(Action.Read, 'Lesson', {
       isPreview: true,
       section: { course: { status: CourseStatus.PUBLISHED } },
+    });
+    can(Action.Update, 'Lesson', {
+      section: { course: { instructorId: user.id } },
+    });
+    can(Action.Delete, 'Lesson', {
+      section: { course: { instructorId: user.id } },
     });
   }
 }
