@@ -6,13 +6,7 @@ import { InstructorPolicy } from './policies/instructor.policy';
 import { StudentPolicy } from './policies/student.policy';
 
 @Module({
-  providers: [
-    CaslAbilityFactory,
-    GuestPolicy,
-    AdminPolicy,
-    InstructorPolicy,
-    StudentPolicy,
-  ],
+  providers: [CaslAbilityFactory],
   exports: [CaslAbilityFactory],
 })
 export class CaslModule {}

@@ -6,6 +6,7 @@ import { AppAbility, IPolicyHandler } from './types';
 import { InstructorPolicy } from './policies/instructor.policy';
 import { StudentPolicy } from './policies/student.policy';
 import { AdminPolicy } from './policies/admin.policy';
+import { GuestPolicy } from './policies/guest.policy';
 
 @Injectable()
 export class CaslAbilityFactory {
@@ -24,6 +25,9 @@ export class CaslAbilityFactory {
     if (PolicyClass) {
       const handler = new PolicyClass();
       handler.define(builder, user);
+    } else {
+      const handler = new GuestPolicy();
+      handler.define(builder);
     }
 
     return builder.build();
