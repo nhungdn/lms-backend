@@ -3,6 +3,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { LessonsModule } from './modules/lessons/lessons.module';
+import { SectionsModule } from './modules/sections/sections.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
@@ -17,6 +18,7 @@ import { CaslModule } from './modules/casl/casl.module';
     UsersModule,
     CoursesModule,
     LessonsModule,
+    SectionsModule,
     EnrollmentsModule,
     PrismaModule,
     ConfigModule.forRoot({
