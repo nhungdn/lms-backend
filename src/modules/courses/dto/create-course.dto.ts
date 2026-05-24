@@ -24,7 +24,7 @@ export class CreateCourseDto {
   @IsUUID()
   categoryId!: string;
 
-  @IsNumber()
+  @Type(() => Number)
   @Min(0)
   price!: number;
 }

@@ -11,6 +11,8 @@ import { envValidationSchema } from './config/env.validation';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { CaslModule } from './modules/casl/casl.module';
+import { PoliciesGuard } from './modules/casl/guards/policies.guard';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -26,12 +28,17 @@ import { CaslModule } from './modules/casl/casl.module';
       validationSchema: envValidationSchema,
     }),
     CaslModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PoliciesGuard,
     },
   ],
 })

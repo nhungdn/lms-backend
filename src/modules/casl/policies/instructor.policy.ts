@@ -21,6 +21,12 @@ export function defineInstructorAbilities(
   // can update their own courses
   can(Action.Update, 'Course', { instructorId: user.id });
 
+  // can publish their own courses
+  can(Action.Publish, 'Course', { instructorId: user.id });
+
+  // can archive their own courses
+  can(Action.Archive, 'Course', { instructorId: user.id });
+
   // can not delete courses if it is published or active
   cannot(Action.Delete, 'Course', {
     status: { in: [CourseStatus.PUBLISHED, CourseStatus.ARCHIVED] },

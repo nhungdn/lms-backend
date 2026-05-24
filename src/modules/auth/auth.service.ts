@@ -35,6 +35,7 @@ export class AuthService {
         password: hashedPassword,
         firstname: registerDto.firstname,
         lastname: registerDto.lastname,
+        role: registerDto.role,
       },
     });
 

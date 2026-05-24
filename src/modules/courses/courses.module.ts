@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CoursesController } from './courses.controller';
-import { CoursesService } from './courses.service';
+import { CourseRepository } from './repositories/course.repository';
+import { CourseValidationService } from './services/course-validation.service';
+import { InstructorCoursesController } from './controllers/instructor-courses.controller';
+import { CourseCommandService } from './services/course-command.service';
+import { CaslModule } from '../casl/casl.module';
 
 @Module({
-	controllers: [CoursesController],
-	providers: [CoursesService],
+  imports: [CaslModule],
+  controllers: [InstructorCoursesController],
+  providers: [CourseCommandService, CourseValidationService, CourseRepository],
 })
 export class CoursesModule {}
