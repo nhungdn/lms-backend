@@ -15,7 +15,7 @@ type AppSubjects =
 export type AppAbility = PureAbility<[Action, AppSubjects], PrismaQuery>;
 
 export interface IPolicyHandler {
-  define(builder: AbilityBuilder<AppAbility>, user: User): void;
+  handle(ability: AppAbility): boolean;
 }
 
 export type PolicyHandlerCallback = (ability: AppAbility) => boolean;
