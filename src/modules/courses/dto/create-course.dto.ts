@@ -1,30 +1,30 @@
+import { Type } from 'class-transformer';
 import {
-  IsNotEmpty,
   IsString,
   IsOptional,
-  IsEnum,
-  IsDecimal,
-  IsPositive,
+  IsNumber,
+  MinLength,
+  IsUUID,
+  Min,
 } from 'class-validator';
 
 export class CreateCourseDto {
   @IsString()
-  @IsNotEmpty()
+  @MinLength(3)
   title!: string;
 
   @IsString()
-  @IsNotEmpty()
+  @MinLength(20)
   description!: string;
 
   @IsString()
   @IsOptional()
   thumbnail?: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsUUID()
   categoryId!: string;
 
-  @IsDecimal()
-  @IsPositive()
+  @IsNumber()
+  @Min(0)
   price!: number;
 }
