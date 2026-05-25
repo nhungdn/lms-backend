@@ -11,7 +11,7 @@ import { generateSlug } from 'src/common/utils/generate-slug';
 import { UpdateCourseDto } from '../dto/update-course.dto';
 import { CaslAbilityFactory } from 'src/modules/casl/casl-ability.factory';
 import { Action } from 'src/modules/casl/actions.enum';
-import { ForbiddenError, subject } from '@casl/ability';
+import { subject } from '@casl/ability';
 import { CourseValidationService } from './course-validation.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
